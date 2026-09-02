@@ -1,0 +1,85 @@
+/* notification-settings.css */
+
+.notif-settings-list {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.notif-setting-card {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0, 138, 147, 0.08);
+}
+
+.notif-setting-header {
+  padding: 16px 18px;
+  background: var(--surface-mint);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(0, 138, 147, 0.12);
+}
+
+.notif-setting-header-icon {
+  font-size: 18px;
+  color: var(--color-primary-dark);
+}
+
+.notif-setting-header-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.notif-setting-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.notif-setting-item:last-child { border-bottom: none; }
+
+.notif-setting-label { flex: 1; padding-right: 12px; }
+
+.notif-setting-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.notif-setting-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+/* Master toggle */
+.master-toggle-wrap {
+  margin: 16px 20px 0;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 16px rgba(0, 138, 147, 0.25);
+}
+
+.master-toggle-info .title {
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 4px;
+}
+
+.master-toggle-info .desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.9);
+}

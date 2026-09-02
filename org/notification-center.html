@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>알림 센터 — WaveScan</title>
+  <meta name="description" content="WaveScan 알림 센터 — 스캔 결과 및 주요 알림을 확인하세요.">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/notification.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="index.html" class="header-btn" aria-label="뒤로">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <span class="header-title" style="position:absolute;left:50%;transform:translateX(-50%);">알림</span>
+      <div class="header-actions">
+        <button class="header-btn" id="clearAllBtn" title="모두 읽음">
+          <i class="fa-solid fa-check-double"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main-content no-bottom">
+
+    <!-- Clear bar -->
+    <div class="notif-clear-bar">
+      <button class="notif-clear-btn" id="markAllReadBtn">
+        <i class="fa-solid fa-envelope-open"></i> 모두 읽음으로 표시
+      </button>
+    </div>
+
+    <!-- Notification list -->
+    <div class="notif-list" id="notifList">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- Empty -->
+    <div class="empty-state" id="notifEmpty" style="display:none;">
+      <div class="empty-icon"><i class="fa-regular fa-bell"></i></div>
+      <div class="empty-title">알림이 없어요</div>
+      <div class="empty-desc">스캔 결과 및 중요 안내 사항이<br>여기에 표시됩니다</div>
+    </div>
+  </main>
+
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/notification.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>프로필 수정 — WaveScan</title>
+  <meta name="description" content="WaveScan 프로필 수정 — 닉네임과 프로필 사진을 변경하세요.">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/profile-edit.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="mypage.html" class="header-btn" aria-label="뒤로" style="background:var(--surface-mint);">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <span class="header-title" style="position:absolute;left:50%;transform:translateX(-50%);">프로필 수정</span>
+      <div class="header-actions">
+        <button class="header-btn" id="saveBtn" onclick="saveProfile()" style="background:var(--surface-mint);">
+          <i class="fa-solid fa-check"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main-content no-bottom">
+
+    <!-- Hero -->
+    <div class="profile-edit-hero">
+      <div class="avatar-edit-wrap">
+        <div class="avatar-large" id="avatarPreview">
+          <i class="fa-solid fa-user"></i>
+        </div>
+        <button class="avatar-edit-btn" id="changeAvatarBtn" aria-label="사진 변경">
+          <i class="fa-solid fa-camera"></i>
+        </button>
+      </div>
+      <span class="avatar-hint">탭하여 프로필 사진 변경</span>
+    </div>
+
+    <!-- Form -->
+    <div class="edit-form">
+
+      <div class="social-badge" id="socialBadge">
+        <i class="fa-brands fa-google"></i> Google 계정으로 가입됨
+      </div>
+
+      <div class="form-section-title">기본 정보</div>
+
+      <div class="input-group">
+        <label class="input-label" for="nicknameInput">닉네임</label>
+        <div class="input-wrap">
+          <i class="fa-solid fa-user"></i>
+          <input type="text" id="nicknameInput" class="input-field has-icon" placeholder="닉네임을 입력하세요" maxlength="20">
+        </div>
+        <div class="char-count"><span id="nickCount">0</span>/20</div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="emailInput">이메일</label>
+        <div class="input-wrap">
+          <i class="fa-regular fa-envelope"></i>
+          <input type="email" id="emailInput" class="input-field has-icon readonly-field" readonly>
+        </div>
+        <div class="input-hint">Google 계정 이메일은 변경할 수 없습니다</div>
+      </div>
+    </div>
+
+    <div class="edit-actions">
+      <a href="mypage.html" class="btn btn-ghost" style="flex:1;">취소</a>
+      <button class="btn btn-primary" style="flex:2;" onclick="saveProfile()">
+        <i class="fa-solid fa-check"></i> 저장하기
+      </button>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <input type="file" id="avatarInput" accept="image/*" style="display:none;">
+  <script src="js/auth.js"></script>
+  <script src="js/profile-edit.js"></script>
+</body>
+</html>

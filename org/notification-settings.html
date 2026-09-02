@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>알림 설정 — WaveScan</title>
+  <meta name="description" content="WaveScan 알림 설정 — 스캔 완료 알림 및 마케팅 수신을 관리하세요.">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/notification-settings.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="mypage.html" class="header-btn" aria-label="뒤로">
+        <i class="fa-solid fa-arrow-left"></i>
+      </a>
+      <span class="header-title" style="position:absolute;left:50%;transform:translateX(-50%);">알림 설정</span>
+      <div style="width:38px;"></div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main-content no-bottom">
+
+    <!-- Master toggle -->
+    <div class="master-toggle-wrap">
+      <div class="master-toggle-info">
+        <div class="title">전체 알림</div>
+        <div class="desc">모든 푸시 알림을 켜거나 끕니다</div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="masterToggle" checked>
+        <div class="toggle-track"></div>
+      </label>
+    </div>
+
+    <!-- Settings -->
+    <div class="notif-settings-list">
+
+      <!-- Scan -->
+      <div class="notif-setting-card">
+        <div class="notif-setting-header">
+          <i class="fa-solid fa-camera notif-setting-header-icon"></i>
+          <span class="notif-setting-header-title">스캔 알림</span>
+        </div>
+        <div class="notif-setting-item">
+          <div class="notif-setting-label">
+            <div class="notif-setting-title">스캔 완료 알림</div>
+            <div class="notif-setting-desc">AI 분석이 완료되면 알려드려요</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" class="notif-toggle" data-key="scanComplete" checked>
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+        <div class="notif-setting-item">
+          <div class="notif-setting-label">
+            <div class="notif-setting-title">위험 용기 경고</div>
+            <div class="notif-setting-desc">위험 등급 용기 스캔 시 즉시 알림</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" class="notif-toggle" data-key="dangerAlert" checked>
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Service -->
+      <div class="notif-setting-card">
+        <div class="notif-setting-header">
+          <i class="fa-solid fa-gear notif-setting-header-icon"></i>
+          <span class="notif-setting-header-title">서비스 알림</span>
+        </div>
+        <div class="notif-setting-item">
+          <div class="notif-setting-label">
+            <div class="notif-setting-title">안전 가이드 업데이트</div>
+            <div class="notif-setting-desc">새로운 안전 정보가 추가되면 알려드려요</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" class="notif-toggle" data-key="guideUpdate" checked>
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+        <div class="notif-setting-item">
+          <div class="notif-setting-label">
+            <div class="notif-setting-title">공지사항 알림</div>
+            <div class="notif-setting-desc">서비스 공지 및 업데이트 안내</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" class="notif-toggle" data-key="notice" checked>
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+      </div>
+
+      <!-- Marketing -->
+      <div class="notif-setting-card">
+        <div class="notif-setting-header">
+          <i class="fa-solid fa-tag notif-setting-header-icon"></i>
+          <span class="notif-setting-header-title">마케팅 알림</span>
+        </div>
+        <div class="notif-setting-item">
+          <div class="notif-setting-label">
+            <div class="notif-setting-title">이벤트 및 혜택</div>
+            <div class="notif-setting-desc">새로운 이벤트와 혜택 정보</div>
+          </div>
+          <label class="toggle-switch">
+            <input type="checkbox" class="notif-toggle" data-key="marketing">
+            <div class="toggle-track"></div>
+          </label>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="padding: 16px 20px; font-size:12px; color:var(--text-tertiary); line-height:1.6;">
+      * 위험 용기 경고 알림은 서비스 정책에 따라 항상 수신될 수 있습니다.<br>
+      * 알림 설정은 기기 알림 권한이 허용된 경우에만 작동합니다.
+    </div>
+
+  </main>
+
+  <script src="js/notification-settings.js"></script>
+</body>
+</html>

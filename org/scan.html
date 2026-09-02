@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>용기 스캔 — WaveScan</title>
+  <meta name="description" content="카메라로 주방 용기를 스캔하여 전자레인지 안전성을 AI가 즉시 분석합니다.">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/scan.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="scan-page">
+  <!-- Main -->
+  <main class="main-content">
+    <div class="scan-viewfinder" id="scanViewfinder">
+      <!-- Camera BG -->
+      <div class="camera-feed">
+        <video id="cameraVideo" autoplay playsinline muted></video>
+      </div>
+
+      <!-- Scan frame -->
+      <div class="scan-frame-wrap">
+        <div class="scan-frame" id="scanFrame">
+          <div class="scan-frame-corner tl"></div>
+          <div class="scan-frame-corner tr"></div>
+          <div class="scan-frame-corner bl"></div>
+          <div class="scan-frame-corner br"></div>
+          <div class="scan-line" id="scanLine"></div>
+          <div class="scan-guide-inner">
+            <div class="scan-guide-dot"></div>
+          </div>
+        </div>
+
+        <div class="scan-status">
+          <div class="scan-status-text" id="statusText">용기를 프레임 안에 맞춰주세요</div>
+          <div class="scan-status-hint">용기 전체가 보이도록 거리를 조절하세요</div>
+        </div>
+      </div>
+
+      <!-- Analyzing overlay -->
+      <div class="scan-analyzing" id="analyzingOverlay">
+        <div class="analyzing-ring"></div>
+        <div class="analyzing-text">AI 분석 중...</div>
+        <div class="analyzing-sub">용기 재질과 안전성을 확인하고 있어요</div>
+      </div>
+
+      <!-- Bottom controls -->
+      <div class="scan-controls">
+        <a href="index.html" class="scan-ctrl-btn" title="뒤로">
+          <i class="fa-solid fa-xmark"></i>
+        </a>
+
+        <button class="shutter-btn" id="shutterBtn" title="스캔">
+          <div class="shutter-inner">
+            <i class="fa-solid fa-camera"></i>
+          </div>
+        </button>
+
+        <button class="album-preview" id="albumBtn" title="앨범">
+          <i class="fa-regular fa-image"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <div class="toast" id="toast"></div>
+  <input type="file" id="fileInput" accept="image/*" style="display:none;">
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/scan.js"></script>
+</body>
+</html>

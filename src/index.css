@@ -1,0 +1,10 @@
+/* WaveScan index.css - Global Reset & Font imports */
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap');
+
+html, body, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+}

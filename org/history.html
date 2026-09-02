@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스캔 기록 — WaveScan</title>
+  <meta name="description" content="WaveScan 스캔 기록 — 내가 검사한 모든 용기의 분석 결과를 확인하세요.">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/history.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="index.html" class="header-brand">
+        <img src="img/logo.jpg" alt="WaveScan" class="header-logo">
+        <span class="header-title">스캔 기록</span>
+      </a>
+      <div class="header-actions">
+        <a href="notification-center.html" class="header-btn" aria-label="알림">
+          <i class="fa-regular fa-bell"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main-content">
+
+    <!-- Stats summary -->
+    <div class="history-stats" id="historyStats">
+      <div class="hstat">
+        <div class="hstat-dot safe"></div>
+        <div class="hstat-value" id="safeCount">0</div>
+        <div class="hstat-label">안전</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-dot caution"></div>
+        <div class="hstat-value" id="cautionCount">0</div>
+        <div class="hstat-label">주의</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-dot danger"></div>
+        <div class="hstat-value" id="dangerCount">0</div>
+        <div class="hstat-label">위험</div>
+      </div>
+      <div class="hstat">
+        <div style="height:8px;"></div>
+        <div class="hstat-value" id="totalCount">0</div>
+        <div class="hstat-label">전체</div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-wrap">
+      <div class="search-input-wrap">
+        <i class="fa-solid fa-magnifying-glass search-icon"></i>
+        <input type="text" class="search-input" id="searchInput" placeholder="재질 또는 날짜로 검색...">
+      </div>
+    </div>
+
+    <!-- Filter chips -->
+    <div class="filter-bar" id="filterBar">
+      <button class="filter-chip active" data-filter="all">전체</button>
+      <button class="filter-chip" data-filter="safe">✅ 안전</button>
+      <button class="filter-chip" data-filter="caution">⚠️ 주의</button>
+      <button class="filter-chip" data-filter="danger">🚫 위험</button>
+    </div>
+
+    <!-- List -->
+    <div class="history-list" id="historyList">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- Empty state -->
+    <div class="empty-state" id="historyEmpty" style="display:none;">
+      <div class="empty-icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+      <div class="empty-title">스캔 기록이 없어요</div>
+      <div class="empty-desc">용기를 스캔하면 여기에 기록이 쌓여요.<br>첫 번째 스캔을 시작해보세요!</div>
+      <a href="scan.html" class="btn btn-primary" style="margin-top:24px; max-width:200px;">
+        <i class="fa-solid fa-camera"></i> 지금 스캔하기
+      </a>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item" id="navHome">
+      <i class="fa-solid fa-house"></i>
+      <span>홈</span>
+    </a>
+    <a href="history.html" class="nav-item active" id="navHistory">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>기록</span>
+    </a>
+    <a href="scan.html" class="nav-item scan-nav" id="navScan">
+      <div class="nav-scan-circle"><i class="fa-solid fa-camera"></i></div>
+      <span>스캔</span>
+    </a>
+    <a href="guide.html" class="nav-item" id="navGuide">
+      <i class="fa-solid fa-book-open"></i>
+      <span>가이드</span>
+    </a>
+    <a href="mypage.html" class="nav-item" id="navMypage">
+      <i class="fa-solid fa-user"></i>
+      <span>마이페이지</span>
+    </a>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/history.js"></script>
+</body>
+</html>
