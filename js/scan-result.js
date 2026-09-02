@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
     currentScan = scans.find(s => s.id === scanId);
   }
 
+  const sessionCapturedImage = sessionStorage.getItem('scannedImage');
+
   if (!currentScan) {
     // Default or newly simulated scan result
     currentScan = {
@@ -27,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
       maxTemp: isUpload ? 180 : 120,
       bpaStatus: 'Free',
       confidence: 96,
-      imageUrl: isUpload ? '' : 'img/logo.jpg',
+      imageUrl: sessionCapturedImage || (isUpload ? '' : 'img/logo.jpg'),
       checklist: [
         { name: 'BPA Free 인증', status: 'pass', text: '인증 완료' },
         { name: '고온 변형 테스트', status: 'pass', text: '내열 기준 통과' },
@@ -36,15 +38,22 @@ document.addEventListener('DOMContentLoaded', () => {
       ],
       aiComment: '분석 결과 해당 용기는 전자레인지 고온 데우기에 적합한 안전 용기입니다. 뚜껑을 약간 열어 증기가 배출되도록 조리하세요.'
     };
+  } else if (sessionCapturedImage && isNew) {
+    currentScan.imageUrl = sessionCapturedImage;
   }
 
   // Populate UI
   const resultImage = document.getElementById('resultImage');
   const imagePlaceholder = document.getElementById('imagePlaceholder');
-  if (currentScan.imageUrl && resultImage) {
-    resultImage.src = currentScan.imageUrl;
+  const displayImage = sessionCapturedImage || currentScan.imageUrl;
+
+  if (displayImage && resultImage) {
+    resultImage.src = displayImage;
     resultImage.style.display = 'block';
     if (imagePlaceholder) imagePlaceholder.style.display = 'none';
+  } else if (imagePlaceholder) {
+    imagePlaceholder.style.display = 'flex';
+    if (resultImage) resultImage.style.display = 'none';
   }
 
   const gradeOverlay = document.getElementById('gradeOverlay');
@@ -126,6 +135,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const saveBtn = document.getElementById('saveResultBtn');
   if (saveBtn) {
     saveBtn.addEventListener('click', () => {
+      if (sessionCapturedImage) {
+        currentScan.imageUrl = sessionCapturedImage;
+      }
       WaveData.saveScan(currentScan);
       showToast('스캔 결과가 저장되었습니다.');
       saveBtn.disabled = true;

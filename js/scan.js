@@ -69,9 +69,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Shutter action
+  // Shutter action (Capture video frame to canvas)
   if (shutterBtn) {
     shutterBtn.addEventListener('click', () => {
+      if (cameraVideo && cameraVideo.videoWidth > 0) {
+        try {
+          const canvas = document.createElement('canvas');
+          canvas.width = cameraVideo.videoWidth;
+          canvas.height = cameraVideo.videoHeight;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(cameraVideo, 0, 0, canvas.width, canvas.height);
+          const snapshotDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+          sessionStorage.setItem('scannedImage', snapshotDataUrl);
+        } catch (e) {
+          console.warn('Failed to capture video snapshot:', e);
+        }
+      }
+
       if (analyzingOverlay) analyzingOverlay.classList.add('visible');
       if (statusText) statusText.textContent = '스캔 중... 용기를 가만히 유지하세요';
 
@@ -89,10 +103,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     fileInput.addEventListener('change', (e) => {
       if (e.target.files && e.target.files[0]) {
-        if (analyzingOverlay) analyzingOverlay.classList.add('visible');
-        setTimeout(() => {
-          window.location.href = 'scan-result.html?upload=true';
-        }, 1500);
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (evt) => {
+          try {
+            sessionStorage.setItem('scannedImage', evt.target.result);
+          } catch (err) {
+            console.warn('Failed to store uploaded image:', err);
+          }
+          if (analyzingOverlay) analyzingOverlay.classList.add('visible');
+          setTimeout(() => {
+            window.location.href = 'scan-result.html?upload=true';
+          }, 1500);
+        };
+        reader.readAsDataURL(file);
       }
     });
   }
