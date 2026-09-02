@@ -10,36 +10,12 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body class="scan-page">
-  <!-- Header -->
-  <header class="app-header">
-    <div class="header-inner">
-      <a href="index.html" class="header-brand">
-        <img src="img/logo.jpg" alt="WaveScan" class="header-logo">
-        <span class="header-title">용기 스캔</span>
-      </a>
-      <div class="header-actions">
-        <a href="notification-center.html" class="header-btn" aria-label="알림">
-          <i class="fa-regular fa-bell"></i>
-        </a>
-      </div>
-    </div>
-  </header>
-
   <!-- Main -->
   <main class="main-content">
     <div class="scan-viewfinder" id="scanViewfinder">
       <!-- Camera BG -->
-      <div class="camera-feed"></div>
-
-      <!-- Top controls -->
-      <div class="scan-lens-row">
-        <button class="scan-lens-btn" id="flashBtn" title="플래시">
-          <i class="fa-solid fa-bolt"></i>
-        </button>
-        <div class="zoom-badge" id="zoomBadge">1.0×</div>
-        <button class="scan-lens-btn" id="flipBtn" title="카메라 전환">
-          <i class="fa-solid fa-rotate"></i>
-        </button>
+      <div class="camera-feed">
+        <video id="cameraVideo" autoplay playsinline muted></video>
       </div>
 
       <!-- Scan frame -->
@@ -86,30 +62,6 @@
       </div>
     </div>
   </main>
-
-  <!-- Bottom Nav -->
-  <nav class="bottom-nav">
-    <a href="index.html" class="nav-item" id="navHome">
-      <i class="fa-solid fa-house"></i>
-      <span>홈</span>
-    </a>
-    <a href="history.html" class="nav-item" id="navHistory">
-      <i class="fa-solid fa-clock-rotate-left"></i>
-      <span>기록</span>
-    </a>
-    <a href="scan.html" class="nav-item scan-nav active" id="navScan">
-      <div class="nav-scan-circle"><i class="fa-solid fa-camera"></i></div>
-      <span>스캔</span>
-    </a>
-    <a href="guide.html" class="nav-item" id="navGuide">
-      <i class="fa-solid fa-book-open"></i>
-      <span>가이드</span>
-    </a>
-    <a href="mypage.html" class="nav-item" id="navMypage">
-      <i class="fa-solid fa-user"></i>
-      <span>마이페이지</span>
-    </a>
-  </nav>
 
   <div class="toast" id="toast"></div>
   <input type="file" id="fileInput" accept="image/*" style="display:none;">

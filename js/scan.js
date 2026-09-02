@@ -1,6 +1,7 @@
 /* scan.js */
 
 document.addEventListener('DOMContentLoaded', () => {
+  const cameraVideo = document.getElementById('cameraVideo');
   const shutterBtn = document.getElementById('shutterBtn');
   const flashBtn = document.getElementById('flashBtn');
   const flipBtn = document.getElementById('flipBtn');
@@ -9,6 +10,43 @@ document.addEventListener('DOMContentLoaded', () => {
   const zoomBadge = document.getElementById('zoomBadge');
   const statusText = document.getElementById('statusText');
   const analyzingOverlay = document.getElementById('analyzingOverlay');
+
+  let mediaStream = null;
+
+  // Real Camera Stream (getUserMedia)
+  async function startCamera() {
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      console.warn('MediaDevices API is not supported in this environment.');
+      return;
+    }
+
+    try {
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: { ideal: 'environment' },
+          width: { ideal: 1920 },
+          height: { ideal: 1080 }
+        },
+        audio: false
+      });
+
+      if (cameraVideo) {
+        cameraVideo.srcObject = mediaStream;
+        await cameraVideo.play().catch(err => console.warn('Autoplay prevented:', err));
+      }
+    } catch (err) {
+      console.warn('Real camera stream failed or permission denied:', err);
+    }
+  }
+
+  startCamera();
+
+  // Stop track when leaving page
+  window.addEventListener('beforeunload', () => {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(track => track.stop());
+    }
+  });
 
   let flashOn = false;
   let zoomLevel = 1.0;
