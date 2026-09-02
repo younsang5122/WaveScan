@@ -127,23 +127,27 @@
         </div>
 
         <!-- Account -->
-        <div class="menu-section">
-          <div class="menu-section-label">계정</div>
-          <div class="list-group">
-            <button class="list-item" id="logoutBtn">
-              <div class="list-item-icon" style="background:#FEE2E2;color:#DC2626;"><i class="fa-solid fa-right-from-bracket"></i></div>
-              <div class="list-item-body">
-                <div class="list-item-title" style="color:#DC2626;">로그아웃</div>
+        <div class="menu-section account-menu-section">
+          <div class="menu-section-label">계정 관리</div>
+          <div class="account-card-group">
+            <button class="account-action-item logout" id="logoutBtn" type="button">
+              <div class="account-action-left">
+                <div class="account-action-icon logout-icon"><i class="fa-solid fa-right-from-bracket"></i></div>
+                <div class="account-action-text">
+                  <span class="account-action-title">로그아웃</span>
+                </div>
               </div>
-              <div class="list-item-right"><i class="fa-solid fa-chevron-right"></i></div>
+              <div class="account-action-arrow"><i class="fa-solid fa-chevron-right"></i></div>
             </button>
-            <a href="account-deletion.html" class="list-item">
-              <div class="list-item-icon danger"><i class="fa-solid fa-trash"></i></div>
-              <div class="list-item-body">
-                <div class="list-item-title" style="color:#DC2626;">회원 탈퇴</div>
-                <div class="list-item-desc">계정 및 데이터 영구 삭제</div>
+            <a href="account-deletion.html" class="account-action-item delete">
+              <div class="account-action-left">
+                <div class="account-action-icon delete-icon"><i class="fa-solid fa-user-xmark"></i></div>
+                <div class="account-action-text">
+                  <span class="account-action-title">회원 탈퇴</span>
+                  <span class="account-action-desc">계정 정보 및 데이터 영구 삭제</span>
+                </div>
               </div>
-              <div class="list-item-right"><i class="fa-solid fa-chevron-right"></i></div>
+              <div class="account-action-arrow"><i class="fa-solid fa-chevron-right"></i></div>
             </a>
           </div>
         </div>
@@ -216,7 +220,7 @@
     </a>
     <a href="mypage.html" class="nav-item active" id="navMypage">
       <i class="fa-solid fa-user"></i>
-      <span>마이</span>
+      <span>마이페이지</span>
     </a>
   </nav>
 
