@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>스캔 결과 — WaveScan</title>
+  <meta name="description" content="AI 분석 결과 — 용기의 전자레인지 안전성 등급과 재질 분석 리포트를 확인하세요.">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/scan-result.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="index.html" class="header-brand">
+        <img src="img/logo.jpg" alt="WaveScan" class="header-logo">
+        <span class="header-title">분석 결과</span>
+      </a>
+      <div class="header-actions">
+        <a href="notification-center.html" class="header-btn" aria-label="알림">
+          <i class="fa-regular fa-bell"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main-content">
+
+    <!-- Image + Grade overlay -->
+    <div class="result-hero">
+      <div class="result-image-wrap" id="resultImageWrap">
+        <div class="result-image-placeholder" id="imagePlaceholder">
+          <i class="fa-solid fa-bowl-food"></i>
+          <span>스캔된 이미지</span>
+        </div>
+        <img src="" alt="스캔 이미지" class="result-image" id="resultImage" style="display:none;">
+        <div class="result-grade-overlay" id="gradeOverlay">
+          <i class="fa-solid fa-circle-check"></i> <span id="gradeOverlayText">안전</span>
+        </div>
+      </div>
+
+      <!-- Grade card -->
+      <div class="grade-card" id="gradeCard">
+        <div class="grade-icon" id="gradeIcon">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div>
+          <div class="grade-label" id="gradeLabelTop">안전 등급</div>
+          <div class="grade-title" id="gradeTitle">전자레인지 사용 가능</div>
+          <div class="grade-desc" id="gradeDesc">이 용기는 전자레인지 사용에 안전합니다.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Material info -->
+    <div class="result-section">
+      <div class="section-header mb-16">
+        <h2 class="section-title"><i class="fa-solid fa-layer-group"></i> 재질 분석</h2>
+      </div>
+      <div class="material-grid">
+        <div class="material-item">
+          <div class="material-item-label">감지된 재질</div>
+          <div class="material-item-value" id="materialType">PP 플라스틱</div>
+        </div>
+        <div class="material-item">
+          <div class="material-item-label">내열 온도</div>
+          <div class="material-item-value" id="maxTemp">120°C</div>
+        </div>
+        <div class="material-item">
+          <div class="material-item-label">BPA 상태</div>
+          <div class="material-item-value" id="bpaStatus">Free</div>
+        </div>
+        <div class="material-item">
+          <div class="material-item-label">분석 신뢰도</div>
+          <div class="material-item-value" id="confidence">94%</div>
+        </div>
+      </div>
+      <div class="temp-bar-wrap">
+        <div class="temp-bar-labels">
+          <span>0°C</span>
+          <span id="tempLabel">120°C / 최대 240°C</span>
+        </div>
+        <div class="temp-bar">
+          <div class="temp-bar-fill" id="tempBar" style="width:50%"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Safety checklist -->
+    <div class="result-section">
+      <div class="section-header mb-16">
+        <h2 class="section-title"><i class="fa-solid fa-list-check"></i> 안전 파라미터</h2>
+      </div>
+      <div class="checklist" id="safetyChecklist">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- AI comment -->
+    <div class="result-section">
+      <div class="section-header mb-16">
+        <h2 class="section-title"><i class="fa-solid fa-robot"></i> AI 분석 의견</h2>
+      </div>
+      <div class="ai-comment">
+        <div class="ai-comment-header">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> WaveScan AI
+        </div>
+        <p class="ai-comment-text" id="aiComment">분석 중입니다...</p>
+      </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- Actions -->
+    <div class="result-actions">
+      <button class="btn btn-primary btn-icon" id="saveResultBtn">
+        <i class="fa-solid fa-bookmark"></i> 결과 저장하기
+      </button>
+      <div style="display:flex; gap:10px;">
+        <a href="scan.html" class="btn btn-secondary" style="flex:1;">
+          <i class="fa-solid fa-rotate-right"></i> 다시 스캔
+        </a>
+        <a href="history.html" class="btn btn-ghost" style="flex:1;">
+          <i class="fa-solid fa-clock-rotate-left"></i> 기록 보기
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item" id="navHome">
+      <i class="fa-solid fa-house"></i>
+      <span>홈</span>
+    </a>
+    <a href="history.html" class="nav-item" id="navHistory">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>기록</span>
+    </a>
+    <a href="scan.html" class="nav-item scan-nav active" id="navScan">
+      <div class="nav-scan-circle"><i class="fa-solid fa-camera"></i></div>
+      <span>스캔</span>
+    </a>
+    <a href="guide.html" class="nav-item" id="navGuide">
+      <i class="fa-solid fa-book-open"></i>
+      <span>가이드</span>
+    </a>
+    <a href="mypage.html" class="nav-item" id="navMypage">
+      <i class="fa-solid fa-user"></i>
+      <span>마이</span>
+    </a>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/scan-result.js"></script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+/* scan.css */
+
+.scan-page .main-content {
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Viewfinder */
+.scan-viewfinder {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - var(--header-height) - var(--bottom-nav-height));
+  background: #0A1628;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Camera simulation overlay */
+.camera-feed {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, #0A1628 0%, #0D2137 60%, #0A1628 100%);
+}
+
+/* Scan frame */
+.scan-frame-wrap {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.scan-frame {
+  width: 240px;
+  height: 240px;
+  position: relative;
+}
+
+.scan-frame-corner {
+  position: absolute;
+  width: 36px;
+  height: 36px;
+  border-color: var(--color-primary);
+  border-style: solid;
+}
+.scan-frame-corner.tl { top: 0; left: 0; border-width: 3px 0 0 3px; border-radius: 6px 0 0 0; }
+.scan-frame-corner.tr { top: 0; right: 0; border-width: 3px 3px 0 0; border-radius: 0 6px 0 0; }
+.scan-frame-corner.bl { bottom: 0; left: 0; border-width: 0 0 3px 3px; border-radius: 0 0 0 6px; }
+.scan-frame-corner.br { bottom: 0; right: 0; border-width: 0 3px 3px 0; border-radius: 0 0 6px 0; }
+
+/* Scan line animation */
+.scan-line {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-secondary), transparent);
+  box-shadow: 0 0 10px var(--color-secondary), 0 0 24px rgba(46,196,182,0.4);
+  animation: scanMove 2.4s ease-in-out infinite;
+  top: 8px;
+}
+
+@keyframes scanMove {
+  0%   { top: 8px; opacity: 1; }
+  48%  { top: calc(100% - 10px); opacity: 1; }
+  50%  { top: calc(100% - 10px); opacity: 0; }
+  52%  { top: 8px; opacity: 0; }
+  54%  { opacity: 1; }
+  100% { top: 8px; opacity: 1; }
+}
+
+/* Guide text inside frame */
+.scan-guide-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.scan-guide-dot {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(0,163,173,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(0,163,173,0.3);
+}
+
+.scan-guide-dot::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 12px rgba(0,163,173,0.6);
+}
+
+/* Status text */
+.scan-status {
+  text-align: center;
+}
+
+.scan-status-text {
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+  letter-spacing: 0.3px;
+}
+
+.scan-status-hint {
+  font-size: 12px;
+  color: rgba(255,255,255,0.45);
+  margin-top: 6px;
+}
+
+/* Lens icons */
+.scan-lens-row {
+  position: absolute;
+  top: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  z-index: 3;
+}
+
+.scan-lens-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.14);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--ease);
+  border: none;
+}
+
+.scan-lens-btn:hover {
+  background: rgba(255,255,255,0.25);
+}
+
+/* Bottom controls */
+.scan-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 24px 24px 28px;
+  background: linear-gradient(0deg, rgba(0,0,0,0.65) 0%, transparent 100%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 3;
+}
+
+.scan-ctrl-btn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: var(--ease);
+  text-decoration: none;
+}
+
+.scan-ctrl-btn:hover {
+  background: rgba(255,255,255,0.28);
+}
+
+/* Shutter button */
+.shutter-btn {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  background: white;
+  border: 4px solid rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--ease);
+  position: relative;
+  box-shadow: 0 0 0 3px rgba(0,163,173,0.4);
+}
+
+.shutter-btn:hover {
+  transform: scale(1.05);
+}
+
+.shutter-btn:active {
+  transform: scale(0.94);
+}
+
+.shutter-inner {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  box-shadow: 0 4px 16px rgba(0,163,173,0.5);
+}
+
+/* Upload from album */
+.album-preview {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.18);
+  border: 2px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  transition: var(--ease);
+}
+
+.album-preview:hover { opacity: 0.85; }
+
+/* Zoom indicator */
+.zoom-badge {
+  position: absolute;
+  bottom: 120px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.5);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 14px;
+  font-size: 13px;
+  z-index: 3;
+  backdrop-filter: blur(8px);
+  letter-spacing: 0.4px;
+}
+
+/* Analyzing overlay */
+.scan-analyzing {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  z-index: 10;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.scan-analyzing.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.analyzing-ring {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid rgba(0,163,173,0.3);
+  border-top-color: var(--color-primary);
+  animation: spin 1s linear infinite;
+}
+
+.analyzing-text {
+  font-size: 15px;
+  color: white;
+  letter-spacing: 0.4px;
+}
+
+.analyzing-sub {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+}

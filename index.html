@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WaveScan — AI 전자레인지 용기 안전 검사</title>
+  <meta name="description" content="WaveScan 홈 — AI 스캔으로 주방 용기의 전자레인지 안전성을 즉시 확인하세요.">
+  <link rel="stylesheet" href="css/common.css">
+  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <a href="index.html" class="header-brand">
+        <img src="img/logo.jpg" alt="WaveScan" class="header-logo">
+        <span class="header-title">WaveScan</span>
+      </a>
+      <div class="header-actions">
+        <a href="notification-center.html" class="header-btn" aria-label="알림">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notif-dot" id="notifDot"></span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="main-content" id="mainContent">
+
+    <!-- Guest banner (shown when not logged in) -->
+    <a href="login.html" class="guest-banner anim-fade-in-up" id="guestBanner" style="display:none;">
+      <div class="guest-banner-icon"><i class="fa-solid fa-user-plus"></i></div>
+      <div class="guest-banner-text">
+        <div class="title">로그인하고 더 많은 기능을</div>
+        <div class="desc">스캔 기록 저장 및 개인 통계를 이용해보세요</div>
+      </div>
+      <i class="fa-solid fa-chevron-right guest-banner-arrow"></i>
+    </a>
+
+    <!-- Hero CTA -->
+    <div class="hero-section anim-fade-in-up anim-delay-1">
+      <div class="hero-card">
+        <div class="hero-label"><i class="fa-solid fa-wand-magic-sparkles"></i> AI 스캔 분석</div>
+        <h1 class="hero-title">용기 안전성을<br>바로 확인하세요</h1>
+        <p class="hero-sub">카메라로 스캔하거나 앨범에서 이미지를 선택해 전자레인지 사용 안전성을 즉시 확인하세요</p>
+        <div class="hero-actions">
+          <a href="scan.html" class="hero-btn primary" id="scanBtn">
+            <i class="fa-solid fa-camera"></i> 카메라 스캔
+          </a>
+          <button class="hero-btn secondary" id="uploadBtn">
+            <i class="fa-solid fa-image"></i> 앨범 선택
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-section anim-fade-in-up anim-delay-2" id="statsSection">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-chart-bar"></i> 나의 스캔 통계</h2>
+      </div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon"><i class="fa-solid fa-camera"></i></div>
+          <div class="stat-value" id="totalScanCount">0</div>
+          <div class="stat-label">총 스캔 횟수</div>
+          <div class="stat-badge" id="scanBadge">이번 달</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon amber"><i class="fa-solid fa-bullseye"></i></div>
+          <div class="stat-value" id="accuracyVal">—</div>
+          <div class="stat-label" id="accuracyLabel">개인 정확도</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Scans -->
+    <div class="recent-section anim-fade-in-up anim-delay-3">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fa-regular fa-clock"></i> 최근 스캔</h2>
+        <a href="history.html" class="section-link">전체 보기</a>
+      </div>
+
+      <div class="scan-carousel hide-scroll" id="scanCarousel">
+        <!-- Rendered by JS -->
+        <div class="empty-state" id="scanEmptyState" style="display:none; width:100%;">
+          <div class="empty-icon"><i class="fa-solid fa-camera"></i></div>
+          <div class="empty-title">스캔 기록이 없어요</div>
+          <div class="empty-desc">첫 번째 용기를 스캔해보세요</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Guide Preview -->
+    <div class="guide-section anim-fade-in-up anim-delay-4">
+      <div class="section-header">
+        <h2 class="section-title"><i class="fa-solid fa-book-open"></i> 재질별 안전 가이드</h2>
+        <a href="guide.html" class="section-link">더 보기</a>
+      </div>
+      <div class="guide-grid">
+        <a href="guide.html#pp" class="guide-card">
+          <div class="guide-emoji">♻️</div>
+          <div class="guide-name">PP<br>플라스틱</div>
+        </a>
+        <a href="guide.html#ceramic" class="guide-card">
+          <div class="guide-emoji">🏺</div>
+          <div class="guide-name">세라믹·<br>도자기</div>
+        </a>
+        <a href="guide.html#glass" class="guide-card">
+          <div class="guide-emoji">🥛</div>
+          <div class="guide-name">유리</div>
+        </a>
+        <a href="guide.html#melamine" class="guide-card">
+          <div class="guide-emoji">🍽️</div>
+          <div class="guide-name">멜라민</div>
+        </a>
+        <a href="guide.html#stainless" class="guide-card">
+          <div class="guide-emoji">🥄</div>
+          <div class="guide-name">스테인리스</div>
+        </a>
+        <a href="guide.html" class="guide-card">
+          <div class="guide-emoji">📖</div>
+          <div class="guide-name">전체<br>보기</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="home-bottom-pad"></div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-item active" id="navHome">
+      <i class="fa-solid fa-house"></i>
+      <span>홈</span>
+    </a>
+    <a href="history.html" class="nav-item" id="navHistory">
+      <i class="fa-solid fa-clock-rotate-left"></i>
+      <span>기록</span>
+    </a>
+    <a href="scan.html" class="nav-item scan-nav" id="navScan">
+      <div class="nav-scan-circle"><i class="fa-solid fa-camera"></i></div>
+      <span>스캔</span>
+    </a>
+    <a href="guide.html" class="nav-item" id="navGuide">
+      <i class="fa-solid fa-book-open"></i>
+      <span>가이드</span>
+    </a>
+    <a href="mypage.html" class="nav-item" id="navMypage">
+      <i class="fa-solid fa-user"></i>
+      <span>마이</span>
+    </a>
+  </nav>
+
+  <div class="toast" id="toast"></div>
+
+  <input type="file" id="fileInput" accept="image/*" style="display:none;">
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/home.js"></script>
+</body>
+</html>

@@ -1,0 +1,183 @@
+/* account-deletion.css */
+
+.deletion-hero {
+  padding: 32px 20px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.deletion-icon {
+  width: 88px;
+  height: 88px;
+  border-radius: 26px;
+  background: #FEF2F2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  color: #DC2626;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 16px rgba(220,38,38,0.12);
+  border: 1px solid rgba(220,38,38,0.2);
+}
+
+.deletion-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+.deletion-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 320px;
+}
+
+/* Warning card */
+.deletion-warning {
+  margin: 0 20px 20px;
+  background: #FEF2F2;
+  border-radius: var(--radius-md);
+  padding: 18px;
+  border: 1.5px solid rgba(220,38,38,0.25);
+}
+
+.deletion-warning-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #B91C1C;
+  margin-bottom: 12px;
+}
+
+.deletion-warning-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.deletion-warning-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #7F1D1D;
+  line-height: 1.5;
+}
+
+.deletion-warning-item i {
+  color: #DC2626;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* Reason select */
+.deletion-form {
+  padding: 0 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.reason-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: white;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border-color);
+  cursor: pointer;
+  transition: var(--ease);
+}
+
+.reason-option.selected {
+  border-color: #DC2626;
+  background: #FEF2F2;
+}
+
+.reason-radio {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--border-color);
+  flex-shrink: 0;
+  transition: var(--ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+.reason-option.selected .reason-radio {
+  border-color: #DC2626;
+  background: #DC2626;
+}
+
+.reason-option.selected .reason-radio::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
+
+.reason-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Confirm checkbox */
+.confirm-check-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  background: #FEF2F2;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid rgba(220,38,38,0.25);
+  cursor: pointer;
+}
+
+.confirm-checkbox {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #DC2626;
+  border-radius: 6px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 12px;
+  transition: var(--ease);
+  background: white;
+  margin-top: 1px;
+  box-sizing: border-box;
+}
+
+.confirm-check-wrap.checked .confirm-checkbox {
+  background: #DC2626;
+}
+
+.confirm-check-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #7F1D1D;
+  line-height: 1.55;
+}
+
+.deletion-actions {
+  padding: 0 20px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
