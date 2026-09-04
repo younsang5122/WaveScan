@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import '../../css/common.css';
@@ -7,10 +7,25 @@ import '../../css/auth-start.css';
 export const AuthStartPage: React.FC = () => {
   const { loginWithGoogle, setGuestMode } = useAuth();
   const navigate = useNavigate();
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  const handleGoogleLogin = () => {
-    loginWithGoogle();
-    navigate('/home');
+  const handleGoogleLogin = async () => {
+    try {
+      setIsAuthenticating(true);
+      setErrorMsg(null);
+      await loginWithGoogle();
+      navigate('/home');
+    } catch (err: any) {
+      console.error(err);
+      if (err?.code === 'auth/popup-closed-by-user') {
+        setErrorMsg('로그인 창이 닫혔습니다. 다시 시도해 주세요.');
+      } else {
+        setErrorMsg('Google 로그인 처리 중 오류가 발생했습니다.');
+      }
+    } finally {
+      setIsAuthenticating(false);
+    }
   };
 
   const handleGuestLogin = () => {
@@ -59,7 +74,13 @@ export const AuthStartPage: React.FC = () => {
           <div className="auth-card-title">시작하기</div>
           <p className="auth-card-sub">간편하게 로그인하고 모든 기능을 사용해보세요</p>
 
-          <button className="btn-google-auth" onClick={handleGoogleLogin}>
+          {errorMsg && (
+            <div style={{ color: '#ef4444', fontSize: '13px', marginBottom: '12px', textAlign: 'center' }}>
+              {errorMsg}
+            </div>
+          )}
+
+          <button className="btn-google-auth" onClick={handleGoogleLogin} disabled={isAuthenticating}>
             <svg className="google-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
@@ -78,14 +99,14 @@ export const AuthStartPage: React.FC = () => {
                 fill="#EA4335"
               />
             </svg>
-            Google로 계속하기
+            {isAuthenticating ? 'Google 로그인 진행 중...' : 'Google로 계속하기'}
           </button>
 
           <div className="auth-divider">
             <span>또는</span>
           </div>
 
-          <button className="btn-guest" onClick={handleGuestLogin}>
+          <button className="btn-guest" onClick={handleGuestLogin} disabled={isAuthenticating}>
             <i className="fa-regular fa-user"></i>
             로그인 없이 사용하기
           </button>

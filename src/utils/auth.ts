@@ -1,6 +1,5 @@
-// WaveScan — auth.ts (auth.js TypeScript 변환)
-
 import type { User } from '../types/index';
+import { auth, googleProvider, signInWithPopup, firebaseSignOut } from '../firebase';
 
 const AUTH_KEY = 'wavescan_user';
 
@@ -21,22 +20,26 @@ export const Auth = {
     return !!user && user.isLoggedIn === true;
   },
 
-  loginWithGoogle(
-    email = 'user@gmail.com',
-    name = '홍길동',
-    avatar = '/img/logo.jpg'
-  ): User {
-    const user: User = {
-      isLoggedIn: true,
-      provider: 'google',
-      name,
-      email,
-      avatar,
-      loginTime: new Date().toISOString(),
-    };
-    localStorage.setItem(AUTH_KEY, JSON.stringify(user));
-    notifyAuthChange();
-    return user;
+  async loginWithGoogle(): Promise<User> {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const firebaseUser = result.user;
+      
+      const user: User = {
+        isLoggedIn: true,
+        provider: 'google',
+        name: firebaseUser.displayName || '구글 사용자',
+        email: firebaseUser.email || '',
+        avatar: firebaseUser.photoURL || '/img/logo.jpg',
+        loginTime: new Date().toISOString(),
+      };
+      localStorage.setItem(AUTH_KEY, JSON.stringify(user));
+      notifyAuthChange();
+      return user;
+    } catch (error: any) {
+      console.error("Google Auth Error:", error);
+      throw error;
+    }
   },
 
   setGuestMode(): User {
@@ -52,7 +55,12 @@ export const Auth = {
     return guestUser;
   },
 
-  logout(): void {
+  async logout(): Promise<void> {
+    try {
+      await firebaseSignOut(auth);
+    } catch (err) {
+      console.warn("Firebase signout error", err);
+    }
     localStorage.removeItem(AUTH_KEY);
     notifyAuthChange();
   },

@@ -73,6 +73,29 @@
   </div>
 
   <div class="toast" id="toast"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAb7I8Kooi27l56aE9cdO27o0HB4YsdjAg",
+      authDomain: "wavescan-7c487.firebaseapp.com",
+      projectId: "wavescan-7c487",
+      storageBucket: "wavescan-7c487.firebasestorage.app",
+      messagingSenderId: "193858643707",
+      appId: "1:193858643707:web:1379f192f3f7621869325e"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    window.firebaseAuth = auth;
+    window.firebaseGoogleProvider = googleProvider;
+    window.signInWithPopup = signInWithPopup;
+    window.firebaseSignOut = signOut;
+  </script>
   <script src="js/auth.js"></script>
   <script src="js/login.js"></script>
 </body>
