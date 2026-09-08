@@ -1,4 +1,3 @@
-  [README-WaveScan.md](https://github.com/user-attachments/files/31934271/README-WaveScan.md)
 # 📷 WaveScan — AI 전자레인지 용기 안전 검사 앱
 
 > 카메라로 찍기만 하면, 그 그릇을 전자레인지에 넣어도 되는지 3초 안에 알려주는 앱
