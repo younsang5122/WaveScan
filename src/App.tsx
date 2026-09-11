@@ -19,8 +19,8 @@ import SupportPage from './pages/SupportPage';
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         <GlobalStyle />
         <Routes>
           <Route path="/" element={<SplashPage />} />
@@ -41,8 +41,8 @@ function App() {
           <Route path="/support" element={<SupportPage />} />
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

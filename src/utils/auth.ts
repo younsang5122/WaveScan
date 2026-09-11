@@ -77,12 +77,9 @@ export const Auth = {
   },
 };
 
-export function showToast(message: string, duration = 2500): void {
-  const toastEl = document.getElementById('toast');
-  if (!toastEl) return;
-  toastEl.textContent = message;
-  toastEl.classList.add('show');
-  setTimeout(() => {
-    toastEl.classList.remove('show');
-  }, duration);
+export function showToast(message: string, _duration = 2500): void {
+  // React Toast 컴포넌트로 이벤트 전달 (Toast.tsx 참고)
+  window.dispatchEvent(
+    new CustomEvent<{ text: string }>('wavescan_toast', { detail: { text: message } }),
+  );
 }
