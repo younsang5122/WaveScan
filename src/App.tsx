@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import GlobalStyle from './styles/GlobalStyle';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 import SplashPage from './pages/SplashPage';
 import AuthStartPage from './pages/AuthStartPage';
 import LoginPage from './pages/LoginPage';
@@ -23,22 +24,89 @@ function App() {
       <AuthProvider>
         <GlobalStyle />
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<SplashPage />} />
           <Route path="/splash" element={<SplashPage />} />
           <Route path="/auth" element={<AuthStartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/scan" element={<ScanPage />} />
-          <Route path="/scan-result" element={<ScanResultPage />} />
-          <Route path="/history" element={<HistoryPage />} />
           <Route path="/guide" element={<GuidePage />} />
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/profile-edit" element={<ProfileEditPage />} />
-          <Route path="/notifications" element={<NotificationCenterPage />} />
-          <Route path="/notification-settings" element={<NotificationSettingsPage />} />
-          <Route path="/account-deletion" element={<AccountDeletionPage />} />
           <Route path="/support" element={<SupportPage />} />
+
+          {/* Protected Routes */}
+          <Route
+            path="/home"
+            element={
+              <ProtectedRoute>
+                <HomePage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scan"
+            element={
+              <ProtectedRoute>
+                <ScanPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/scan-result"
+            element={
+              <ProtectedRoute>
+                <ScanResultPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <ProtectedRoute>
+                <HistoryPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/mypage"
+            element={
+              <ProtectedRoute>
+                <MyPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile-edit"
+            element={
+              <ProtectedRoute>
+                <ProfileEditPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <NotificationCenterPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notification-settings"
+            element={
+              <ProtectedRoute>
+                <NotificationSettingsPage />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/account-deletion"
+            element={
+              <ProtectedRoute>
+                <AccountDeletionPage />
+              </ProtectedRoute>
+            }
+          />
+
           <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </AuthProvider>

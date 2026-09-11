@@ -1,20 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { User } from '../types/index';
 import { Auth } from '../utils/auth';
 import { auth, onAuthStateChanged } from '../firebase';
-
-interface AuthContextType {
-  user: User | null;
-  isLoggedIn: boolean;
-  isLoading: boolean;
-  loginWithGoogle: () => Promise<User>;
-  setGuestMode: () => void;
-  logout: () => Promise<void>;
-  deleteAccount: () => Promise<void>;
-  updateProfile: (name?: string, avatar?: string) => User | null;
-}
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
+import { AuthContext } from './AuthContextObject';
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(() => Auth.getUser());
@@ -25,7 +13,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   useEffect(() => {
-
     // Listen to window auth change events
     const handleAuthChange = () => {
       refreshUser();
@@ -109,12 +96,4 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       {children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuthContext = () => {
-  const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuthContext must be used within an AuthProvider');
-  }
-  return context;
 };

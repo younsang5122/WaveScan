@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import AppHeader from '../components/layout/AppHeader';
 import BottomNav from '../components/layout/BottomNav';
 import { useData } from '../hooks/useData';
 import type { ScanData } from '../types';
 import { showToast } from '../utils/auth';
+import { analyzeImageWithAI } from '../services/visionAi';
 import '../../css/common.css';
 import '../../css/scan-result.css';
 
@@ -14,12 +15,14 @@ export const ScanResultPage: React.FC = () => {
   const isUpload = searchParams.get('upload') === 'true';
 
   const { scans, saveScan } = useData();
-  const [isSaved, setIsSaved] = useState(false);
-
   const existingScan = scanId ? scans.find((s) => s.id === scanId) : null;
   const sessionCapturedImage = sessionStorage.getItem('scannedImage');
 
-  const [newScan] = useState<ScanData>(() => {
+  const [isSaved, setIsSaved] = useState(false);
+  const [isAnalyzing, setIsAnalyzing] = useState(() => !existingScan && !!sessionCapturedImage);
+
+  const [scanResult, setScanResult] = useState<ScanData>(() => {
+    if (existingScan) return existingScan;
     const now = Date.now();
     const dateStr = new Date(now).toISOString().replace('T', ' ').substring(0, 16);
     return {
@@ -46,8 +49,37 @@ export const ScanResultPage: React.FC = () => {
     };
   });
 
-  const currentScan = existingScan || newScan;
+  useEffect(() => {
+    if (!existingScan && sessionCapturedImage) {
+      let isMounted = true;
 
+      analyzeImageWithAI(sessionCapturedImage).then((aiResult) => {
+
+        if (!isMounted) return;
+        setScanResult((prev) => ({
+          ...prev,
+          material: aiResult.material,
+          materialCode: aiResult.materialCode,
+          grade: aiResult.grade,
+          gradeTitle: aiResult.gradeTitle,
+          gradeDesc: aiResult.gradeDesc,
+          maxTemp: aiResult.maxTemp,
+          bpaStatus: aiResult.bpaStatus,
+          confidence: aiResult.confidence,
+          checklist: aiResult.checklist,
+          aiComment: aiResult.aiComment,
+          imageUrl: sessionCapturedImage,
+        }));
+        setIsAnalyzing(false);
+      });
+
+      return () => {
+        isMounted = false;
+      };
+    }
+  }, [existingScan, sessionCapturedImage]);
+
+  const currentScan = existingScan || scanResult;
   const displayImage = sessionCapturedImage || currentScan.imageUrl;
   const tempPct = Math.min(100, Math.round((currentScan.maxTemp / 240) * 100));
 
@@ -65,6 +97,25 @@ export const ScanResultPage: React.FC = () => {
       <AppHeader title="분석 결과" notifDot={true} />
 
       <main className="main-content">
+        {/* Analyzing banner if async AI refining */}
+        {isAnalyzing && (
+          <div style={{
+            background: 'linear-gradient(135deg, #008A93, #00B4D8)',
+            color: 'white',
+            padding: '12px 16px',
+            borderRadius: '12px',
+            marginBottom: '16px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontSize: '13px',
+            fontWeight: 600
+          }}>
+            <i className="fa-solid fa-wand-magic-sparkles fa-spin"></i>
+            <span>Vision AI가 이미지 특성을 정밀 분석하고 있습니다...</span>
+          </div>
+        )}
+
         {/* Image + Grade overlay */}
         <div className="result-hero">
           <div className="result-image-wrap">

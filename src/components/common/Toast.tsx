@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import { createPortal } from 'react-dom';
 
@@ -55,22 +55,3 @@ const Toast: React.FC<ToastProps> = ({ messages }) => {
 
 export default Toast;
 
-/** useToast hook — 토스트 메시지 목록을 관리 */
-export function useToastMessages() {
-  const [messages, setMessages] = useState<ToastMessage[]>([]);
-
-  useEffect(() => {
-    const handler = (e: Event) => {
-      const { text } = (e as CustomEvent<{ text: string }>).detail;
-      const id = Date.now();
-      setMessages((prev) => [...prev, { id, text }]);
-      setTimeout(() => {
-        setMessages((prev) => prev.filter((m) => m.id !== id));
-      }, 2800);
-    };
-    window.addEventListener('wavescan_toast', handler);
-    return () => window.removeEventListener('wavescan_toast', handler);
-  }, []);
-
-  return messages;
-}
