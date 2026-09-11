@@ -1,5 +1,5 @@
 import type { User } from '../types/index';
-import { auth, googleProvider, signInWithPopup, firebaseSignOut } from '../firebase';
+import { auth, googleProvider, signInWithPopup, firebaseSignOut, deleteUser } from '../firebase';
 
 const AUTH_KEY = 'wavescan_user';
 
@@ -12,7 +12,18 @@ const notifyAuthChange = () => {
 export const Auth = {
   getUser(): User | null {
     const userStr = localStorage.getItem(AUTH_KEY);
-    return userStr ? (JSON.parse(userStr) as User) : null;
+    if (!userStr) return null;
+    try {
+      const user = JSON.parse(userStr) as User;
+      if (!user || user.isLoggedIn !== true) {
+        localStorage.removeItem(AUTH_KEY);
+        return null;
+      }
+      return user;
+    } catch {
+      localStorage.removeItem(AUTH_KEY);
+      return null;
+    }
   },
 
   isLoggedIn(): boolean {
@@ -42,17 +53,10 @@ export const Auth = {
     }
   },
 
-  setGuestMode(): User {
-    const guestUser: User = {
-      isLoggedIn: false,
-      provider: 'guest',
-      name: '손님',
-      email: '',
-      avatar: '',
-    };
-    localStorage.setItem(AUTH_KEY, JSON.stringify(guestUser));
+  setGuestMode(): null {
+    localStorage.removeItem(AUTH_KEY);
     notifyAuthChange();
-    return guestUser;
+    return null;
   },
 
   async logout(): Promise<void> {
@@ -60,6 +64,22 @@ export const Auth = {
       await firebaseSignOut(auth);
     } catch (err) {
       console.warn("Firebase signout error", err);
+    }
+    localStorage.removeItem(AUTH_KEY);
+    notifyAuthChange();
+  },
+
+  async deleteAccount(): Promise<void> {
+    if (auth.currentUser) {
+      try {
+        await deleteUser(auth.currentUser);
+      } catch (err: any) {
+        console.error("Firebase deleteUser error:", err);
+        if (err?.code === 'auth/requires-recent-login') {
+          throw new Error('보안을 위해 다시 로그인한 후 회원 탈퇴를 진행해 주세요.');
+        }
+        throw err;
+      }
     }
     localStorage.removeItem(AUTH_KEY);
     notifyAuthChange();
@@ -83,3 +103,4 @@ export function showToast(message: string, _duration = 2500): void {
     new CustomEvent<{ text: string }>('wavescan_toast', { detail: { text: message } }),
   );
 }
+

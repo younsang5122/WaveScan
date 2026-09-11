@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackHeader from '../components/layout/BackHeader';
 import { useAuth } from '../hooks/useAuth';
@@ -7,12 +7,23 @@ import '../../css/common.css';
 import '../../css/profile-edit.css';
 
 export const ProfileEditPage: React.FC = () => {
-  const { user, updateProfile } = useAuth();
+  const { user, isLoggedIn, updateProfile } = useAuth();
   const navigate = useNavigate();
   const avatarInputRef = useRef<HTMLInputElement>(null);
 
   const [nickname, setNickname] = useState(user?.name || '');
   const [avatarSrc, setAvatarSrc] = useState(user?.avatar || '');
+
+  useEffect(() => {
+    if (!isLoggedIn || !user) {
+      showToast('로그인이 필요한 페이지입니다.');
+      navigate('/login', { replace: true });
+    }
+  }, [isLoggedIn, user, navigate]);
+
+  if (!isLoggedIn || !user) {
+    return null;
+  }
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {

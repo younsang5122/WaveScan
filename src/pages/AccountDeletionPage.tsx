@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BackHeader from '../components/layout/BackHeader';
 import { useAuth } from '../hooks/useAuth';
@@ -7,21 +7,36 @@ import '../../css/common.css';
 import '../../css/account-deletion.css';
 
 export const AccountDeletionPage: React.FC = () => {
-  const { logout } = useAuth();
+  const { deleteAccount, isLoggedIn, user } = useAuth();
   const navigate = useNavigate();
 
   const [selectedReason, setSelectedReason] = useState<string | null>(null);
   const [isConfirmed, setIsConfirmed] = useState(false);
 
-  const handleDelete = () => {
+  useEffect(() => {
+    if (!isLoggedIn || !user) {
+      showToast('로그인이 필요한 페이지입니다.');
+      navigate('/login', { replace: true });
+    }
+  }, [isLoggedIn, user, navigate]);
+
+  if (!isLoggedIn || !user) {
+    return null;
+  }
+
+  const handleDelete = async () => {
     if (!isConfirmed) return;
 
     if (window.confirm('정말로 탈퇴하시겠습니까? 모든 데이터가 삭제됩니다.')) {
-      logout();
-      showToast('회원 탈퇴가 완료되었습니다.');
-      setTimeout(() => {
-        navigate('/login');
-      }, 1000);
+      try {
+        await deleteAccount();
+        showToast('회원 탈퇴가 완료되었습니다.');
+        setTimeout(() => {
+          navigate('/login');
+        }, 1000);
+      } catch (err: any) {
+        showToast(err?.message || '회원 탈퇴 처리 중 오류가 발생했습니다.');
+      }
     }
   };
 

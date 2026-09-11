@@ -10,6 +10,7 @@ export const useAuth = () => {
     loginWithGoogle: context.loginWithGoogle,
     setGuestMode: context.setGuestMode,
     logout: context.logout,
+    deleteAccount: context.deleteAccount,
     updateProfile: context.updateProfile,
     refreshUser: () => context.updateProfile(),
   };

@@ -8,8 +8,9 @@ interface AuthContextType {
   isLoggedIn: boolean;
   isLoading: boolean;
   loginWithGoogle: () => Promise<User>;
-  setGuestMode: () => User;
+  setGuestMode: () => void;
   logout: () => Promise<void>;
+  deleteAccount: () => Promise<void>;
   updateProfile: (name?: string, avatar?: string) => User | null;
 }
 
@@ -49,6 +50,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           localStorage.setItem('wavescan_user', JSON.stringify(updatedUser));
           setUser(updatedUser);
         }
+      } else {
+        const currentUser = Auth.getUser();
+        if (currentUser && currentUser.provider === 'google') {
+          localStorage.removeItem('wavescan_user');
+          setUser(null);
+        }
       }
     });
 
@@ -65,14 +72,18 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return loggedInUser;
   };
 
-  const setGuestMode = (): User => {
-    const guestUser = Auth.setGuestMode();
-    setUser(guestUser);
-    return guestUser;
+  const setGuestMode = (): void => {
+    Auth.setGuestMode();
+    setUser(null);
   };
 
   const logout = async (): Promise<void> => {
     await Auth.logout();
+    setUser(null);
+  };
+
+  const deleteAccount = async (): Promise<void> => {
+    await Auth.deleteAccount();
     setUser(null);
   };
 
@@ -91,6 +102,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         loginWithGoogle,
         setGuestMode,
         logout,
+        deleteAccount,
         updateProfile,
       }}
     >
