@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import GlobalStyle from './styles/GlobalStyle';
 import SplashPage from './pages/SplashPage';
 import AuthStartPage from './pages/AuthStartPage';
@@ -18,28 +19,30 @@ import SupportPage from './pages/SupportPage';
 
 function App() {
   return (
-    <BrowserRouter>
-      <GlobalStyle />
-      <Routes>
-        <Route path="/" element={<SplashPage />} />
-        <Route path="/splash" element={<SplashPage />} />
-        <Route path="/auth" element={<AuthStartPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/scan" element={<ScanPage />} />
-        <Route path="/scan-result" element={<ScanResultPage />} />
-        <Route path="/history" element={<HistoryPage />} />
-        <Route path="/guide" element={<GuidePage />} />
-        <Route path="/mypage" element={<MyPage />} />
-        <Route path="/profile-edit" element={<ProfileEditPage />} />
-        <Route path="/notifications" element={<NotificationCenterPage />} />
-        <Route path="/notification-settings" element={<NotificationSettingsPage />} />
-        <Route path="/account-deletion" element={<AccountDeletionPage />} />
-        <Route path="/support" element={<SupportPage />} />
-        <Route path="*" element={<Navigate to="/home" replace />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Routes>
+          <Route path="/" element={<SplashPage />} />
+          <Route path="/splash" element={<SplashPage />} />
+          <Route path="/auth" element={<AuthStartPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/scan" element={<ScanPage />} />
+          <Route path="/scan-result" element={<ScanResultPage />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/guide" element={<GuidePage />} />
+          <Route path="/mypage" element={<MyPage />} />
+          <Route path="/profile-edit" element={<ProfileEditPage />} />
+          <Route path="/notifications" element={<NotificationCenterPage />} />
+          <Route path="/notification-settings" element={<NotificationSettingsPage />} />
+          <Route path="/account-deletion" element={<AccountDeletionPage />} />
+          <Route path="/support" element={<SupportPage />} />
+          <Route path="*" element={<Navigate to="/home" replace />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

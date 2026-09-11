@@ -71,8 +71,6 @@ export const NotificationCenterPage: React.FC = () => {
     );
   };
 
-  let currentGroup = '';
-
   return (
     <div className="app-shell">
       <BackHeader
@@ -94,11 +92,8 @@ export const NotificationCenterPage: React.FC = () => {
 
         {notifications.length > 0 ? (
           <div className="notif-list">
-            {notifications.map((n) => {
-              const showGroupLabel = n.dateGroup !== currentGroup;
-              if (showGroupLabel) {
-                currentGroup = n.dateGroup;
-              }
+            {notifications.map((n, index, arr) => {
+              const showGroupLabel = index === 0 || n.dateGroup !== arr[index - 1].dateGroup;
               return (
                 <React.Fragment key={n.id}>
                   {showGroupLabel && (

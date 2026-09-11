@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import AppHeader from '../components/layout/AppHeader';
 import BottomNav from '../components/layout/BottomNav';
@@ -9,14 +9,18 @@ type MaterialTab = 'pp' | 'ceramic' | 'glass' | 'melamine' | 'stainless' | 'alum
 
 export const GuidePage: React.FC = () => {
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState<MaterialTab>('pp');
 
-  useEffect(() => {
-    const hash = location.hash.replace('#', '') as MaterialTab;
-    if (hash && ['pp', 'ceramic', 'glass', 'melamine', 'stainless', 'aluminum'].includes(hash)) {
-      setActiveTab(hash);
-    }
-  }, [location.hash]);
+  const hashTab = location.hash.replace('#', '') as MaterialTab;
+  const validHashTab: MaterialTab | null = ['pp', 'ceramic', 'glass', 'melamine', 'stainless', 'aluminum'].includes(hashTab)
+    ? (hashTab as MaterialTab)
+    : null;
+
+  const [overrideTab, setOverrideTab] = useState<MaterialTab | null>(null);
+  const activeTab = overrideTab || validHashTab || 'pp';
+
+  const handleTabClick = (tab: MaterialTab) => {
+    setOverrideTab(tab);
+  };
 
   return (
     <div className="app-shell">
@@ -43,37 +47,37 @@ export const GuidePage: React.FC = () => {
           <div className="guide-tabs" role="tablist">
             <button
               className={`guide-tab ${activeTab === 'pp' ? 'active' : ''}`}
-              onClick={() => setActiveTab('pp')}
+              onClick={() => handleTabClick('pp')}
             >
               PP 플라스틱
             </button>
             <button
               className={`guide-tab ${activeTab === 'ceramic' ? 'active' : ''}`}
-              onClick={() => setActiveTab('ceramic')}
+              onClick={() => handleTabClick('ceramic')}
             >
               세라믹·도자기
             </button>
             <button
               className={`guide-tab ${activeTab === 'glass' ? 'active' : ''}`}
-              onClick={() => setActiveTab('glass')}
+              onClick={() => handleTabClick('glass')}
             >
               내열 유리
             </button>
             <button
               className={`guide-tab ${activeTab === 'melamine' ? 'active' : ''}`}
-              onClick={() => setActiveTab('melamine')}
+              onClick={() => handleTabClick('melamine')}
             >
               멜라민 수지
             </button>
             <button
               className={`guide-tab ${activeTab === 'stainless' ? 'active' : ''}`}
-              onClick={() => setActiveTab('stainless')}
+              onClick={() => handleTabClick('stainless')}
             >
               스테인리스
             </button>
             <button
               className={`guide-tab ${activeTab === 'aluminum' ? 'active' : ''}`}
-              onClick={() => setActiveTab('aluminum')}
+              onClick={() => handleTabClick('aluminum')}
             >
               알루미늄
             </button>

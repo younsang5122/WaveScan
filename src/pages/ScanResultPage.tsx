@@ -19,37 +19,43 @@ export const ScanResultPage: React.FC = () => {
   const existingScan = scanId ? scans.find((s) => s.id === scanId) : null;
   const sessionCapturedImage = sessionStorage.getItem('scannedImage');
 
-  const currentScan: ScanData = existingScan || {
-    id: 'scan_' + Date.now(),
-    date: new Date().toISOString().replace('T', ' ').substring(0, 16),
-    timestamp: Date.now(),
-    material: isUpload ? '내열 강화 유리' : 'PP 플라스틱 5',
-    materialCode: isUpload ? 'GLASS' : 'PP',
-    grade: 'safe',
-    gradeTitle: '전자레인지 사용 가능',
-    gradeDesc: 'BPA Free 인증을 완료한 안전한 내열 용기입니다.',
-    maxTemp: isUpload ? 180 : 120,
-    bpaStatus: 'Free',
-    confidence: 96,
-    imageUrl: sessionCapturedImage || (isUpload ? '' : '/img/logo.jpg'),
-    checklist: [
-      { name: 'BPA Free 인증', status: 'pass', text: '인증 완료' },
-      { name: '고온 변형 테스트', status: 'pass', text: '내열 기준 통과' },
-      { name: '금속 장식 성분', status: 'pass', text: '금속 성분 미감지' },
-      { name: '증기 배출 가이드', status: 'warn', text: '뚜껑 개봉 후 가열' },
-    ],
-    aiComment:
-      '분석 결과 해당 용기는 전자레인지 고온 데우기에 적합한 안전 용기입니다. 뚜껑을 약간 열어 증기가 배출되도록 조리하세요.',
-  };
+  const [newScan] = useState<ScanData>(() => {
+    const now = Date.now();
+    const dateStr = new Date(now).toISOString().replace('T', ' ').substring(0, 16);
+    return {
+      id: 'scan_' + now,
+      date: dateStr,
+      timestamp: now,
+      material: isUpload ? '내열 강화 유리' : 'PP 플라스틱 5',
+      materialCode: isUpload ? 'GLASS' : 'PP',
+      grade: 'safe',
+      gradeTitle: '전자레인지 사용 가능',
+      gradeDesc: 'BPA Free 인증을 완료한 안전한 내열 용기입니다.',
+      maxTemp: isUpload ? 180 : 120,
+      bpaStatus: 'Free',
+      confidence: 96,
+      imageUrl: sessionCapturedImage || (isUpload ? '' : '/img/logo.jpg'),
+      checklist: [
+        { name: 'BPA Free 인증', status: 'pass', text: '인증 완료' },
+        { name: '고온 변형 테스트', status: 'pass', text: '내열 기준 통과' },
+        { name: '금속 장식 성분', status: 'pass', text: '금속 성분 미감지' },
+        { name: '증기 배출 가이드', status: 'warn', text: '뚜껑 개봉 후 가열' },
+      ],
+      aiComment:
+        '분석 결과 해당 용기는 전자레인지 고온 데우기에 적합한 안전 용기입니다. 뚜껑을 약간 열어 증기가 배출되도록 조리하세요.',
+    };
+  });
+
+  const currentScan = existingScan || newScan;
 
   const displayImage = sessionCapturedImage || currentScan.imageUrl;
   const tempPct = Math.min(100, Math.round((currentScan.maxTemp / 240) * 100));
 
   const handleSave = () => {
-    if (sessionCapturedImage) {
-      currentScan.imageUrl = sessionCapturedImage;
-    }
-    saveScan(currentScan);
+    const scanToSave: ScanData = sessionCapturedImage
+      ? { ...currentScan, imageUrl: sessionCapturedImage }
+      : currentScan;
+    saveScan(scanToSave);
     setIsSaved(true);
     showToast('스캔 결과가 저장되었습니다.');
   };
