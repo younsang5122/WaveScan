@@ -14,6 +14,30 @@ export const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const scrollLeftRef = useRef(0);
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!carouselRef.current) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - carouselRef.current.offsetLeft;
+    scrollLeftRef.current = carouselRef.current.scrollLeft;
+  };
+
+  const handleMouseLeaveOrUp = () => {
+    isDraggingRef.current = false;
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current || !carouselRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    carouselRef.current.scrollLeft = scrollLeftRef.current - walk;
+  };
+
   const handleUploadClick = () => {
     fileInputRef.current?.click();
   };
@@ -116,13 +140,37 @@ export const HomePage: React.FC = () => {
             </Link>
           </div>
 
-          <div className="scan-carousel hide-scroll" id="scanCarousel">
+          <div
+            ref={carouselRef}
+            className="scan-carousel hide-scroll"
+            id="scanCarousel"
+            onMouseDown={handleMouseDown}
+            onMouseLeave={handleMouseLeaveOrUp}
+            onMouseUp={handleMouseLeaveOrUp}
+            onMouseMove={handleMouseMove}
+          >
             {recentScans.length > 0 ? (
               recentScans.map((scan) => {
                 let badgeHtml = null;
-                if (scan.grade === 'safe') badgeHtml = <span className="badge badge-safe">안전</span>;
-                else if (scan.grade === 'caution') badgeHtml = <span className="badge badge-caution">주의</span>;
-                else badgeHtml = <span className="badge badge-danger">위험</span>;
+                if (scan.grade === 'safe') {
+                  badgeHtml = (
+                    <span className="badge badge-safe">
+                      <i className="fa-solid fa-circle-check"></i> 안전
+                    </span>
+                  );
+                } else if (scan.grade === 'caution') {
+                  badgeHtml = (
+                    <span className="badge badge-caution">
+                      <i className="fa-solid fa-triangle-exclamation"></i> 주의
+                    </span>
+                  );
+                } else {
+                  badgeHtml = (
+                    <span className="badge badge-danger">
+                      <i className="fa-solid fa-circle-xmark"></i> 위험
+                    </span>
+                  );
+                }
 
                 return (
                   <Link key={scan.id} to={`/scan-result?id=${scan.id}`} className="scan-card">

@@ -389,16 +389,28 @@ ul, ol { list-style: none; }
 .badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   padding: 4px 10px;
   border-radius: 20px;
   font-size: 12px;
   font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
 }
 
 .badge-safe    { background: var(--status-safe-bg); color: #047857; }
 .badge-caution { background: var(--surface-amber);  color: #B45309; }
 .badge-danger  { background: #FEE2E2; color: #B91C1C; }
+
+/* ─── Scroll Utilities ─── */
+.hide-scroll {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.hide-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
 
 /* ─── Input ─── */
 .input-group { margin-bottom: 16px; }
