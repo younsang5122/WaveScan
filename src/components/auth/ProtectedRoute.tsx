@@ -11,7 +11,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   allowGuest = true,
 }) => {
-  const { isLoggedIn, user, loading } = useAuth();
+  const { isLoggedIn, loading } = useAuth();
   const location = useLocation();
 
   if (loading) {
@@ -31,12 +31,10 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     );
   }
 
-  // If not logged in and not guest
-  const isGuest = !isLoggedIn && localStorage.getItem('wavescan_guest') === 'true';
+  const isGuest = localStorage.getItem('wavescan_guest') === 'true';
 
-  if (!isLoggedIn && (!allowGuest || !user)) {
-    // If neither logged in nor guest, redirect to /auth
-    if (!isGuest && !user) {
+  if (!isLoggedIn) {
+    if (!allowGuest || !isGuest) {
       return <Navigate to="/auth" state={{ from: location }} replace />;
     }
   }

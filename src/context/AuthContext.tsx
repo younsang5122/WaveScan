@@ -35,6 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
             loginTime: new Date().toISOString(),
           };
           localStorage.setItem('wavescan_user', JSON.stringify(updatedUser));
+          localStorage.removeItem('wavescan_guest');
           setUser(updatedUser);
         }
       } else {

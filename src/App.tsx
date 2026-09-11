@@ -77,7 +77,7 @@ function App() {
           <Route
             path="/profile-edit"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowGuest={false}>
                 <ProfileEditPage />
               </ProtectedRoute>
             }
@@ -101,7 +101,7 @@ function App() {
           <Route
             path="/account-deletion"
             element={
-              <ProtectedRoute>
+              <ProtectedRoute allowGuest={false}>
                 <AccountDeletionPage />
               </ProtectedRoute>
             }

@@ -45,6 +45,7 @@ export const Auth = {
         loginTime: new Date().toISOString(),
       };
       localStorage.setItem(AUTH_KEY, JSON.stringify(user));
+      localStorage.removeItem('wavescan_guest');
       notifyAuthChange();
       return user;
     } catch (error: any) {
@@ -55,6 +56,7 @@ export const Auth = {
 
   setGuestMode(): null {
     localStorage.removeItem(AUTH_KEY);
+    localStorage.setItem('wavescan_guest', 'true');
     notifyAuthChange();
     return null;
   },
@@ -66,6 +68,7 @@ export const Auth = {
       console.warn("Firebase signout error", err);
     }
     localStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem('wavescan_guest');
     notifyAuthChange();
   },
 
@@ -82,6 +85,7 @@ export const Auth = {
       }
     }
     localStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem('wavescan_guest');
     notifyAuthChange();
   },
 
